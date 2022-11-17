@@ -4,6 +4,8 @@ UNAME = $(shell uname -s)
 # === Flags and Compile === #
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS += -fsanitize=address
+
 ifeq ($(UNAME), Darwin)
 	OS = APPLE
 	MLX_PATH = mlx/
@@ -51,7 +53,7 @@ subsystems:
 	$(CC) $(CFLAGS) $(MLX_INC) -c $< -o $@ 
 
 $(NAME): $(OBJECTS)
-	$(CC) $(OBJECTS) $(MLX_FLAGS) $(LIBFT_LIB) -lm -o $(NAME) 
+	$(CC) $(OBJECTS) $(CFLAGS) $(MLX_FLAGS) $(LIBFT_LIB) -lm -o $(NAME) 
 
 clean:
 	make -C $(MLX_PATH) clean
