@@ -8,15 +8,16 @@ char	**alloc_n_fill_array(char **tab)
 	i = 0;
 	while (tab[i])
 		i++;
-	ret = malloc(sizeof(char *) * i + 1);
+	ret = (char **)malloc(sizeof(char *) * (i + 1));
 	if (!ret)
 		exit_n_display("malloc failed\n");
-	i = -1;
-	while (tab[++i])
+	i = 0;
+	while (tab[i])
 	{
 		ret[i] = ft_strdup(tab[i]);
 		if (!ret[i])
 			exit_n_display("malloc failed\n");
+		i++;
 	}
 	ret[i] = 0;
 	return (ret);
@@ -99,7 +100,7 @@ char	**collect_map(char *line, int fd)
 			tmp = alloc_n_fill_array(tab);
 		if (tab)
 			free_array(tab);
-		tab = malloc(sizeof(char *) * ++row + 1);
+		tab = (char **)malloc(sizeof(char *) * (++row + 1));
 		if (!tab)
 			exit_n_display("malloc failed\n");
 		if (tmp)
